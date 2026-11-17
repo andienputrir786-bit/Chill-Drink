@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOME</title>
+</head>
+<body>
+    
+</body>
+</html>
+
+<?php
+require_once __DIR__ . '/config/database.php';
+$pageTitle = 'Home';
+$latest = $pdo->query(
+    "SELECT * FROM articles ORDER BY published_at DESC LIMIT 3"
+)->fetchAll();
+
+include __DIR__ . '/includes/header.php';
+?>
+
+<!-- BANNER HOME -->
+<section class="hero">
+    <div class="container hero-content">
+        <span class="eyebrow">FRESH MOMENTS, BETTER DAYS</span>
+
+        <h1>
+            Temukan rasa yang membuat harimu lebih
+            <em>berarti.</em>
+        </h1>
+
+        <p>
+            Chill & Drink menghadirkan minuman berkualitas
+            dan mini cake pilihan untuk menemani setiap momen.
+        </p>
+
+        <a class="btn btn-brand" href="services.php">
+            Jelajahi Menu
+        </a>
+    </div>
+</section>
+
+<!-- ABOUT SECTION -->
+<section class="section-pad">
+    <div class="container">
+        <span class="eyebrow">WHO WE ARE</span>
+        <h2>Lebih dari sekadar minuman.</h2>
+
+        <p>
+            Chill & Drink adalah perusahaan kuliner yang
+            menyediakan berbagai pilihan minuman kopi,
+            non-kopi, dan mini cake dengan kualitas terbaik.
+        </p>
+
+        <a href="about.php" class="btn btn-outline-brand">
+            About Us
+        </a>
+    </div>
+</section>
+
+<!-- OUR PRODUCTS -->
+<section class="section-pad soft-bg">
+    <div class="container">
+        <span class="eyebrow">OUR FAVORITES</span>
+        <h2>Our Products</h2>
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+                <div class="service-card">
+                    <div class="service-image drink-coffee"></div>
+                    <div class="card-body-custom">
+                        <h3>Coffee</h3>
+                        <p>
+                            Pilihan kopi dengan rasa dan aroma
+                            yang khas.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="service-card">
+                    <div class="service-image drink-fruit"></div>
+                    <div class="card-body-custom">
+                        <h3>Non-Coffee</h3>
+                        <p>
+                            Minuman segar dengan berbagai
+                            pilihan rasa buah.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="service-card">
+                    <div class="service-image drink-cake"></div>
+                    <div class="card-body-custom">
+                        <h3>Mini Cake</h3>
+                        <p>
+                            Dessert manis untuk menemani
+                            waktu santaimu.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- LATEST ARTICLES -->
+<section class="section-pad">
+    <div class="container">
+        <span class="eyebrow">LATEST STORIES</span>
+        <h2>Our Latest Articles</h2>
+
+        <div class="row g-4">
+            <?php foreach ($latest as $article): ?>
+            <div class="col-md-4">
+                <div class="article-card">
+                    <img
+                        src="<?= htmlspecialchars($article['image_url']) ?>"
+                        alt="Artikel"
+                    >
+
+                    <div class="card-body-custom">
+                        <h3>
+                            <?= htmlspecialchars($article['title']) ?>
+                        </h3>
+
+                        <p>
+                            <?= htmlspecialchars($article['excerpt']) ?>
+                        </p>
+
+                        <a href="article-detail.php?id=<?= (int)$article['id'] ?>">
+                            Baca Selengkapnya
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+
+<?php include __DIR__ . '/includes/footer.php'; ?>
